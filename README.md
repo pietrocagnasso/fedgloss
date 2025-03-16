@@ -10,8 +10,8 @@ Federated learning (FL) enables collaborative model training with privacy preser
 This work introduces **FedGloSS** (**Fed**erated **Glo**bal **S**erver-side **S**harpness), a novel FL approach that prioritizes the optimization of global sharpness on the server, using SAM. To reduce communication overhead, FedGloSS cleverly approximates sharpness using the previous global gradient, eliminating the need for additional client communication. Our extensive evaluations demonstrate that FedGloSS consistently reaches flatter minima and better performance compared to state-of-the-art FL methods across various federated vision benchmarks.
 
 <p align="center">
-  <img src="fedgloss-vs-fedavg.gif" alt="GIF showing the comparison between FedGloSS and FedAVG" width="415" height="300px">
-  <img src="fedgloss-vs-fedsam.gif" alt="GIF showing the comparison between FedGloSS and FedSAM" width="415" height="300px">
+  <img src="fedgloss-vs-fedavg.gif" alt="GIF showing the comparison between FedGloSS and FedAVG" width="410" height="300px">
+  <img src="fedgloss-vs-fedsam.gif" alt="GIF showing the comparison between FedGloSS and FedSAM" width="410" height="300px">
 </p>
 
 GIFs comparing FedGloSS loss landscape (net) against those of two well-known methods (solid), FedAVG on the left and FedSAM on the right. ResNet18 trained on CIFAR10 ($\alpha = 0.05$).
