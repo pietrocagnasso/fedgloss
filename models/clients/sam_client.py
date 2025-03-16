@@ -5,11 +5,11 @@ from .minimizers import SAM
 
 
 class SAMClient(Client):
-    def __init__(self, seed, client_id, lr, weight_decay, batch_size, momentum, train_data, eval_data, model, dataset, rho, eta, device=None,
+    def __init__(self, seed, client_id, lr, weight_decay, batch_size, momentum, train_data, eval_data, model, dataset, rho_l, eta, device=None,
                  num_workers=0, run=None):
         super().__init__(seed, client_id, lr, weight_decay, batch_size, momentum, train_data, eval_data, model, dataset, device,
                          num_workers, run)
-        self.rho = rho
+        self.rho_l = rho_l
         self.eta = eta
 
     def train(self, num_epochs=1, batch_size=10, minibatch=None):
@@ -17,7 +17,7 @@ class SAMClient(Client):
         return num_train_samples, update
 
     def run_epoch(self, optimizer, criterion):
-        minimizer = SAM(optimizer, self.model, self.rho, self.eta)
+        minimizer = SAM(optimizer, self.model, self.rho_l, self.eta)
         
         running_loss = 0.0
         i = 0

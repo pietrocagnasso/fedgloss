@@ -1,4 +1,3 @@
-"""Script to run the baselines."""
 import importlib
 import inspect
 import numpy as np
@@ -19,6 +18,7 @@ from utils.cutout import Cutout
 from utils.main_utils import *
 from utils.model_utils import read_data
 from eigenthings.hessian_eigenspectrum import compute_hessian_eigenthings
+from torchvision.datasets import CIFAR10, CIFAR100
 
 os.environ["CUDA_DEVICE_ORDER"]="PCI_BUS_ID"
 
@@ -78,9 +78,9 @@ def main():
 
     # Experiment parameters (e.g. num rounds, clients per round, lr, etc)
     tup = MAIN_PARAMS[args.dataset][args.t]
-    num_rounds = args.num_rounds if args.num_rounds != -1 else tup[0]
+    num_rounds = args.T if args.T != -1 else tup[0]
     eval_every = args.eval_every if args.eval_every != -1 else tup[1]
-    clients_per_round = args.clients_per_round if args.clients_per_round != -1 else tup[2]
+    clients_per_round = args.C_t if args.C_t != -1 else tup[2]
 
     model_params = MODEL_PARAMS[model_path]
     if args.lr != -1:
@@ -148,7 +148,7 @@ def main():
         print("Selected clients:", c_ids)
 
         ##### Simulate servers model training on selected clients' data #####
-        sys_metrics = server.train_model(num_epochs=args.num_epochs, batch_size=args.batch_size,
+        sys_metrics = server.train_model(num_epochs=args.E, batch_size=args.batch_size,
                                          minibatch=args.minibatch)
 
         ##### Update server model (FedAvg) #####
@@ -298,12 +298,12 @@ def compute_and_log_eigs(args, model, eigs_file):
 def get_ds(args):
     ds_name = args.dataset
     if ds_name == 'cifar100':
-        ds = CIFAR100(os.path.join("data/cifar100"), train=True, download=True, transform=transforms.Compose([
+        ds = CIFAR100(os.path.join("data/cifar100"), train=False, download=True, transform=transforms.Compose([
                 transforms.ToTensor(),
                 transforms.Normalize((0.4914, 0.4822, 0.4465), (0.2470, 0.2434, 0.2616))
                 ]))
     elif ds_name == 'cifar10':
-        ds = CIFAR10(os.path.join("data/cifar10"), train=True, download=True, transform=transforms.Compose([
+        ds = CIFAR10(os.path.join("data/cifar10"), train=False, download=True, transform=transforms.Compose([
             transforms.ToTensor(),
             transforms.Normalize((0.5071, 0.4865, 0.4409), (0.2673, 0.2564, 0.2762))
             ]))

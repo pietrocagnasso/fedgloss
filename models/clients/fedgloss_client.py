@@ -7,9 +7,9 @@ from .minimizers import FedGloSSOpt
 
 
 class FedGloSSClient(SAMClient):
-    def __init__(self, seed, client_id, lr, weight_decay, batch_size, momentum, train_data, eval_data, model, dataset, rho, eta, beta, device=None,
+    def __init__(self, seed, client_id, lr, weight_decay, batch_size, momentum, train_data, eval_data, model, dataset, rho_l, eta, beta, device=None,
                  num_workers=0, run=None):
-        super().__init__(seed, client_id, lr, weight_decay, batch_size, momentum, train_data, eval_data, model, dataset, rho, eta, device,
+        super().__init__(seed, client_id, lr, weight_decay, batch_size, momentum, train_data, eval_data, model, dataset, rho_l, eta, device,
                  num_workers, run)
         self.beta = beta
         self.state = OrderedDict()

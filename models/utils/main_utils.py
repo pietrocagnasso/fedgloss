@@ -16,7 +16,7 @@ def create_paths(args, current_time, alpha=None, resume=False):
     if not os.path.exists(res_path):
         os.makedirs(res_path)
 
-    run_info = 'K' + str(args.clients_per_round) + '_N' + str(args.num_rounds) + '_clr' + str(args.lr) + '_' +\
+    run_info = 'K' + str(args.C_t) + '_N' + str(args.T) + '_clr' + str(args.lr) + '_' +\
                 args.algorithm
     if args.server_opt is not None and args.server_lr is not None:
         run_info += '_' + args.server_opt + '_slr' + str(args.server_lr)
@@ -37,7 +37,8 @@ def create_paths(args, current_time, alpha=None, resume=False):
     results = open(os.path.join(args.dir, "results", f"{current_time}", f"trends.csv"), "w")
     eigs = open(os.path.join(args.dir, "results", f"{current_time}", f"eigs.txt"), "w")
     with open(os.path.join(args.dir, "results", f"{current_time}", f"params.txt"), "w") as f:
-        f.write(args)
+        for k, v in vars(args).items():
+            f.write(" ".join([k, ":", str(v), "\n"]))
 
     return ckpt_path, res_path, file, ckpt_name, results, eigs
 
@@ -66,9 +67,8 @@ def define_server_params(args, client_model, server_name, opt_ckpt, tot_clients)
     elif server_name == "fedgloss":
         server_params = {
             'client_model': client_model, 'server_opt': args.server_opt, 'server_lr': args.server_lr,
-            'momentum': args.server_momentum, 'opt_ckpt': opt_ckpt, "rho": args.rho, "rho0": args.rho0,
-            "steps": args.rho_warmup_steps, "rounds": args.num_rounds, "server_rho": args.server_rho,
-            "beta": args.beta, "tot_clients": tot_clients, 'sharpness_momentum': args.sharpness_mom
+            'momentum': args.server_momentum, 'opt_ckpt': opt_ckpt, "rho_l": args.rho_l, "rho0": args.rho0,
+            "T_s": args.T_s, "T": args.T, "rho": args.rho, "beta": args.beta, "tot_clients": tot_clients
         }
     else:
         raise NotImplementedError
@@ -80,7 +80,7 @@ def define_client_params(client_name, args, tot_clients):
                      'num_workers': args.num_workers, 'momentum': args.momentum, "dataset": args.dataset}
     
     if client_name in SA_MINIMIZERS:
-        client_params['rho'] = args.rho
+        client_params['rho_l'] = args.rho_l
         client_params['eta'] = args.eta
     if client_name == "fedgloss":
         client_params["beta"] = args.beta
@@ -125,13 +125,13 @@ def plot_metrics(accuracy, loss, n_rounds, figname, figpath, title, prefix='val_
 
 def get_plots_name(args, current_time, alpha=None):
     if alpha is None:
-        img_name_val = 'val_N' + str(args.num_rounds) + '_K' + str(args.clients_per_round) + '_lr' + str(
+        img_name_val = 'val_N' + str(args.T) + '_K' + str(args.C_t) + '_lr' + str(
             args.lr) + current_time
-        img_name_test = 'test_N' + str(args.num_rounds) + '_K' + str(args.clients_per_round) + '_lr' + str(
+        img_name_test = 'test_N' + str(args.T) + '_K' + str(args.C_t) + '_lr' + str(
             args.lr) + current_time
     else:
-        img_name_val = str(alpha) + '_val_N' + str(args.num_rounds) + '_K' + str(
-            args.clients_per_round) + '_lr' + str(args.lr) + current_time
-        img_name_test = str(alpha) + '_test_N' + str(args.num_rounds) + '_K' + str(
-            args.clients_per_round) + '_lr' + str(args.lr) + current_time
+        img_name_val = str(alpha) + '_val_N' + str(args.T) + '_K' + str(
+            args.C_t) + '_lr' + str(args.lr) + current_time
+        img_name_test = str(alpha) + '_test_N' + str(args.T) + '_K' + str(
+            args.C_t) + '_lr' + str(args.lr) + current_time
     return img_name_val, img_name_test

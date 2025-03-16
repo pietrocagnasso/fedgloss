@@ -1,3 +1,8 @@
 raw/
 results/
+checkpoints/
+torch/
 *.tar.gz
+fgvenv/
+__pycache__/
+cifar-*/

@@ -24,7 +24,7 @@ class FedGloSSServer(FedOptServer):
         # SCHEDULING: setup rho values for both client and server
         if T_s > 1:
             if T_s > T:
-                warnings.warn("### The value that was set for T_s is higher tha the number of runds T ###")
+                warnings.warn("### The value that was set for T_s is higher tha the number of rounds T ###")
 
             # define clients' rho values across rounds
             self.rhos_l = [rho0]
