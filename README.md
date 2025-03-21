@@ -3,7 +3,7 @@
 This repository contains the official implementation of
 > Caldarola, D., Cagnasso, P., Caputo, B., & Ciccone, M.
 > _"Beyond Local Sharpness: Communication-Efficient Global Sharpness-aware Minimization for Federated Learning"_,
-> _IEEE/CVF_ (CVPR) 2025.
+> IEEE/CVF 2025.
 
 [ [ArXiv](https://arxiv.org/abs/2412.03752) ] [ [Bibtex](#bibtex-citation) ]
 
