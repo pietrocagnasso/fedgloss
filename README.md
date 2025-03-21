@@ -96,6 +96,16 @@ The table below reports the arguments that can be used to run experiments with t
 | `--no-eigs`          | Disables the computation of eigenvalues at the end of training         |               |
 | `--plots`            | Plots the accuracy and loss trends in the results directory            |               |
 
+### Results
+The execution generates the following output files:
+- `{--dir arg value}/results/[YYYY][mm][dd]_[HH]:[MM]:[SS]/params.text`: Summary of the parameters used for the run.
+- `{--dir arg value}/results/[YYYY][mm][dd]_[HH]:[MM]:[SS]/trends.csv`: Results in terms of accuracy, global model norm, and pseudo-gradient norm.
+- `{--dir arg value}/results/[YYYY][mm][dd]_[HH]:[MM]:[SS]/eigs.txt`: First five eigenvalues and the ratio between the first and fifth eigenvalue.
+- `{--dir arg value}/results/[YYYY][mm][dd]_[HH]:[MM]:[SS]/logs.txt`: A file that reports all the lines printed on the terminal during the training.
+- `{--dir arg value}/results/[YYYY][mm][dd]_[HH]:[MM]:[SS]/accuracy.pdf`: A PDF representing the accuracy trend during the experiment.
+- `{--dir arg value}/results/[YYYY][mm][dd]_[HH]:[MM]:[SS]/loss.pdf`: A PDF representing the loss trend during the experiment.
+- `{--dir arg value}/[YYYY][mm][dd]_[HH]:[MM]:[SS]/checkpoints/`: Contains some checkpoints saved during training.
+
 ### Examples
 Below are examples of how to run experiments as described in the paper. The heterogeneity level can be adjusted using the `--dir-alpha` parameter.
 
@@ -108,16 +118,6 @@ python main.py --dataset cifar10 --dir-alpha 0 --where-loading init --model cnn 
 ```bash
 python main.py --dataset cifar100 --dir-alpha 0 --where-loading init --model cnn -T 20000 --eval-every 100 --C-t 5 --algorithm fedgloss --seed 0 --server-opt sgd --server-lr 1 --server-momentum 0 --batch-size 64 -E 1 --lr 0.01 --weight-decay 0.0004 --momentum 0 --device cuda:0 --rho-l 0.2 --eta 0 --beta 100 --rho 0.01 --T-s 15000 --plots
 ```
-
-### Results
-The execution generates the following output files:
-- `{--dir arg value}/results/[YYYY][mm][dd]_[HH]:[MM]:[SS]/params.text`: Summary of the parameters used for the run.
-- `{--dir arg value}/results/[YYYY][mm][dd]_[HH]:[MM]:[SS]/trends.csv`: Results in terms of accuracy, global model norm, and pseudo-gradient norm.
-- `{--dir arg value}/results/[YYYY][mm][dd]_[HH]:[MM]:[SS]/eigs.txt`: First five eigenvalues and the ratio between the first and fifth eigenvalue.
-- `{--dir arg value}/results/[YYYY][mm][dd]_[HH]:[MM]:[SS]/logs.txt`: A file that reports all the lines printed on the terminal during the training.
-- `{--dir arg value}/results/[YYYY][mm][dd]_[HH]:[MM]:[SS]/accuracy.pdf`: A PDF representing the accuracy trend during the experiment.
-- `{--dir arg value}/results/[YYYY][mm][dd]_[HH]:[MM]:[SS]/loss.pdf`: A PDF representing the loss trend during the experiment.
-- `{--dir arg value}/[YYYY][mm][dd]_[HH]:[MM]:[SS]/checkpoints/`: Contains some checkpoints saved during training.
 
 ## Bibtex citation
 ```text
