@@ -107,7 +107,7 @@ The execution generates the following output files:
 - `{--dir arg value}/[YYYY][mm][dd]_[HH]:[MM]:[SS]/checkpoints/`: Contains some checkpoints saved during training.
 
 ### Examples
-Below are examples of how to run experiments as described in the paper. The heterogeneity level can be adjusted using the `--dir-alpha` parameter.
+Below are examples of how to run the paper's experiments.
 
 #### CIFAR10
 ```bash
