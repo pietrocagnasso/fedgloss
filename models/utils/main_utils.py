@@ -7,14 +7,14 @@ from utils.args import SA_MINIMIZERS
 
 def create_paths(args, current_time, alpha=None, resume=False):
     """ Create paths for checkpoints, plots, analysis results and experiment results. """
-    ckpt_path = os.path.join(args.dir, 'torch', 'checkpoints', args.dataset)
-    if not os.path.exists(ckpt_path):
-        os.makedirs(ckpt_path)
-
     # Create file for storing results
-    res_path = os.path.join(args.dir, 'torch', 'results', args.dataset, args.model)
+    res_path = os.path.join(args.dir, "results", f"{current_time}")
     if not os.path.exists(res_path):
         os.makedirs(res_path)
+
+    ckpt_path = os.path.join(args.dir, "results", f"{current_time}", 'checkpoints')
+    if not os.path.exists(ckpt_path):
+        os.makedirs(ckpt_path)
 
     run_info = 'K' + str(args.C_t) + '_N' + str(args.T) + '_clr' + str(args.lr) + '_' +\
                 args.algorithm
@@ -24,19 +24,17 @@ def create_paths(args, current_time, alpha=None, resume=False):
 
     ckpt_name = None
     if alpha is not None:
-        file = os.path.join(res_path, 'results_' + str(alpha) + run_info +  '.txt')
+        file = os.path.join(res_path, 'logs.txt')
         if not resume:
             ckpt_name = os.path.join(ckpt_path, '{}.ckpt'.format(str(alpha) + run_info))
     else:
-        file = os.path.join(res_path, 'results_' + run_info + '.txt')
+        file = os.path.join(res_path, 'logs.txt')
         if not resume:
             ckpt_name = os.path.join(ckpt_path, '{}.ckpt'.format(run_info))
 
-    os.makedirs(os.path.join(args.dir, "results"), exist_ok=True)
-    os.makedirs(os.path.join(args.dir, "results", f"{current_time}"))
-    results = open(os.path.join(args.dir, "results", f"{current_time}", f"trends.csv"), "w")
-    eigs = open(os.path.join(args.dir, "results", f"{current_time}", f"eigs.txt"), "w")
-    with open(os.path.join(args.dir, "results", f"{current_time}", f"params.txt"), "w") as f:
+    results = open(os.path.join(res_path, f"trends.csv"), "w")
+    eigs = open(os.path.join(res_path, f"eigs.txt"), "w")
+    with open(os.path.join(res_path, f"params.txt"), "w") as f:
         for k, v in vars(args).items():
             f.write(" ".join([k, ":", str(v), "\n"]))
 

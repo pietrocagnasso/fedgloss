@@ -1,6 +1,6 @@
 import argparse
 
-DATASETS = ['cifar10', 'cifar100', 'shakespeare']
+DATASETS = ['cifar10', 'cifar100']
 SERVER_ALGORITHMS = ['fedavg', 'fedopt', "fedgloss"]
 SERVER_OPTS = ['sgd', 'adam', 'adagrad']
 CLIENT_ALGORITHMS = ['sam', "fedgloss"]
@@ -13,7 +13,7 @@ def parse_args():
     parser.add_argument("--dir",
                         type=str,
                         default=".",
-                        help="base directory where to create the results direcory")
+                        help="base directory where to create the results directory")
     
     ## FEDERATED SETTING ##
     parser.add_argument('--dataset',
@@ -56,6 +56,9 @@ def parse_args():
     parser.add_argument("--no-eigs",
                         help="disable the computtion of eigenvalues on the final model",
                         action="store_true",)
+    parser.add_argument("--plots",
+                        help="enables accuracy and loss trands plotting",
+                        action="store_true",)
 
     ## SERVER OPTMIZER ##
     parser.add_argument('--server-opt',
@@ -89,8 +92,7 @@ def parse_args():
     parser.add_argument('--lr',
                         help='learning rate for local optimizers;',
                         type=float,
-                        default=-1,
-                        required=False)
+                        required=True)
     parser.add_argument('--weight-decay',
                         help='weight decay for local optimizers;',
                         type=float,

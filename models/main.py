@@ -1,6 +1,8 @@
 import importlib
 import inspect
 import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
 import os
 import random
 import torch
@@ -133,7 +135,7 @@ def main():
     print_stats(start_round, server, train_clients, train_client_num_samples, test_clients, test_client_num_samples,
                 args, fp)
 
-    results_file.write("round,accuracy,model_norm,pseudograd_norm\n")
+    results_file.write("round,accuracy,loss,model_norm,pseudograd_norm\n")
     # Start training
     for i in range(start_round, num_rounds):
         
@@ -146,6 +148,7 @@ def main():
         server.select_clients(i, online(train_clients), num_clients=clients_per_round)
         c_ids, c_num_samples = server.get_clients_info(server.selected_clients)
         print("Selected clients:", c_ids)
+        fp.write(f'Selected clients: {c_ids}' + '\n')
 
         ##### Simulate servers model training on selected clients' data #####
         sys_metrics = server.train_model(num_epochs=args.E, batch_size=args.batch_size,
@@ -168,7 +171,7 @@ def main():
             model_grad_norm = server.get_model_grad()
             model_params_norm = server.get_model_params_norm()
 
-            results_file.write(f"{i+1},{test_metrics[0]},{model_params_norm},{model_grad_norm}" + "\n")
+            results_file.write(f"{i+1},{test_metrics[0]},{test_metrics[1]},{model_params_norm},{model_grad_norm}" + "\n")
 
             # Save round global model checkpoint
             where_saved = server.save_model(i + 1, os.path.join(ckpt_path, ckpt_name))
@@ -191,6 +194,20 @@ def main():
     fp.close()
     results_file.close()
     eigs_file.close()
+
+    if args.plots:
+        trends_df = pd.read_csv(os.path.join(".", "results", f"{current_time}", f"trends.csv"))
+        trends_df.plot(x="round", y="accuracy", color="tab:blue", title="Accuracy trend")
+        plt.xlabel("Round")
+        plt.ylabel("Accuracy [%]")
+        plt.savefig(os.path.join(res_path, f"accuracy.pdf"), bbox_inches="tight", pad_inches=0.1)
+        plt.close()
+        trends_df.plot(x="round", y="loss", color="tab:orange", title="Loss trend")
+        plt.xlabel("Round")
+        plt.ylabel("Loss")
+        plt.savefig(os.path.join(res_path, f"loss.pdf"), bbox_inches="tight", pad_inches=0.1)
+        plt.close()
+
     print("File saved in path: %s" % res_path)
 
 
