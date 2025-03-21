@@ -78,7 +78,7 @@ The table below reports the arguments that can be used to run experiments with t
 | `--algorithm`        | Server-side algorithm                                                  |   `fedgloss`  |
 | `--client-algorithm` | Client-side algorithm                                                  |   `fedgloss`  |
 | `--seed`             | Random seed for reproducibility                                        |       0       |
-| `--server-opt`       | Server optimizer (based on FedOpt)                                     |     `sgd`     |
+| `--server-opt`       | Server optimizer (FedOpt)                                              |     `sgd`     |
 | `--server-lr`        | Learning rate for the server optimizer                                 |               |
 | `--server-momentum`  | Momentum for the server optimizer                                      |       0       |
 | `--batch-size`       | Batch size for local training                                          |       64      |
