@@ -64,7 +64,7 @@ The implementation is available in `/models/{dataset}/cnn.py`.
 To add a new model, place its implementation in `/models/{dataset_name}/{model_name}.py`. Ensure `{model_name}` matches the `--model` parameter when running an experiment.
 
 ### CLI args
-The table below reports the arguments that can be used to run experiments with this repository.
+The table below reports the arguments that can be used to run experiments with this repository. New args can be added to `/models/utils/args.py`.
 
 | Argument Name        | Description                                                            | Default Value |
 |----------------------|------------------------------------------------------------------------|:-------------:|
