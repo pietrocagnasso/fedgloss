@@ -1,0 +1,11 @@
+torch==2.2.0+cu121
+torchvision==0.17.0+cu121
+torchaudio==2.2.0+cu121
+matplotlib==3.3.4
+scipy==1.10.0
+numpy==1.26.3
+imageio==2.9.0
+natsort==7.1.1
+Pillow==8.4.0
+tqdm==4.62.3
+pandas==2.2.3
