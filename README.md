@@ -2,7 +2,7 @@
 
 This repository contains the official implementation of
 > Caldarola, D., Cagnasso, P., Caputo, B., & Ciccone, M.
-> _"Beyond Local Sharpness: Communication-Efficient Global Sharpness-aware Minimization for Federated Learning"_,
+> _"Beyond Local Sharpness: Communication-Efficient Global Sharpness-aware Minimization for Federated Learning"._
 > In IEEE/CVF Conference on Computer Vision and Pattern Recognition, 2025.
 
 [ [ArXiv](https://arxiv.org/abs/2412.03752) ] [ [Bibtex](#bibtex-citation) ]
@@ -16,7 +16,7 @@ This work introduces **FedGloSS** (**Fed**erated **Glo**bal **S**erver-side **S*
   <img src="fedgloss-vs-fedsam.gif" alt="GIF showing the comparison between FedGloSS and FedSAM" width="410" height="300px">
 </p>
 
-GIFs comparing FedGloSS loss landscape (net) against those of two well-known methods (solid), FedAVG on the left and FedSAM on the right. ResNet18 trained on CIFAR10 ($\alpha = 0.05$).
+GIFs comparing FedGloSS's loss landscape (net) against those of two well-known methods (solid), FedAVG on the left and FedSAM on the right. ResNet18 trained on CIFAR10 ($\alpha = 0.05$).
 
 ## Algorithm
 **FedGloSS** proposes to apply SAM on the server side, while promoting consistency between local and global models by applying Alternating Direction Method of Multipliers (ADMM). Here, is the Algorithm that sumarizes the FedGloSS showing an example with both SAM and SGD (achievable by setting $\rho_l = 0$) on the client.
