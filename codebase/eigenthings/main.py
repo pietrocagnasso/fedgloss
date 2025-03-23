@@ -7,7 +7,7 @@ import numpy as np
 import torch.nn as nn
 from torchvision import transforms, datasets
 from torch.utils.data import DataLoader
-from models import resnet20, cnn, lstm, ShakespeareDS
+from codebase import cnn
 from hessian_eigenspectrum import *
 
 def main():

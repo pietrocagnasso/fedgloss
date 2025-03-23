@@ -34,11 +34,12 @@ def create_paths(args, current_time, alpha=None, resume=False):
 
     results = open(os.path.join(res_path, f"trends.csv"), "w")
     eigs = open(os.path.join(res_path, f"eigs.txt"), "w")
+    logger = open(file, "w")
     with open(os.path.join(res_path, f"params.txt"), "w") as f:
         for k, v in vars(args).items():
             f.write(" ".join([k, ":", str(v), "\n"]))
 
-    return ckpt_path, res_path, file, ckpt_name, results, eigs
+    return ckpt_path, res_path, ckpt_name, results, eigs, logger
 
 def get_alpha(dataset):
     data_dir = os.path.join('..', 'data', dataset, 'data', 'train')

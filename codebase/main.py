@@ -24,16 +24,16 @@ from torchvision.datasets import CIFAR10, CIFAR100
 
 os.environ["CUDA_DEVICE_ORDER"]="PCI_BUS_ID"
 
-cur_round = 0
-
-def cleanup(files):
+def close_open_files(files):
     for f in files:
         f.close()
 
 def main():
+    # read cli args
     args = parse_args()
     check_args(args)
 
+    # reproducibility
     random.seed(args.seed)
     np.random.seed(args.seed)
     torch.manual_seed(args.seed)
@@ -121,47 +121,45 @@ def main():
     start_time = datetime.now()
     current_time = start_time.strftime("%Y%m%d_%H:%M:%S")
 
-    ckpt_path, res_path, file, ckpt_name, results_file, eigs_file = create_paths(args, current_time, alpha=alpha)
+    ckpt_path, res_path, ckpt_name, results_file, eigs_file, logger_file = create_paths(args, current_time, alpha=alpha)
     ckpt_name = current_time + '.ckpt'
 
-    fp = open(file, "w")
     last_accuracies = []
     avg_model = OrderedDict()
     for k, v in server.model.items():
         avg_model[k] = torch.zeros_like(v)
 
-    atexit.register(cleanup, [results_file, eigs_file, fp])
+    atexit.register(close_open_files, [results_file, eigs_file, logger_file])
 
     print_stats(start_round, server, train_clients, train_client_num_samples, test_clients, test_client_num_samples,
-                args, fp)
+                args, logger_file)
 
     results_file.write("round,accuracy,loss,model_norm,pseudograd_norm\n")
     # Start training
     for i in range(start_round, num_rounds):
         
-        cur_round = i
-        
         print('--- Round %d of %d: Training %d Clients ---' % (i + 1, num_rounds, clients_per_round))
-        fp.write('--- Round %d of %d: Training %d Clients ---\n' % (i + 1, num_rounds, clients_per_round))
+        logger_file.write('--- Round %d of %d: Training %d Clients ---\n' % (i + 1, num_rounds, clients_per_round))
 
         # Select clients to train during this round
         server.select_clients(i, online(train_clients), num_clients=clients_per_round)
         c_ids, c_num_samples = server.get_clients_info(server.selected_clients)
         print("Selected clients:", c_ids)
-        fp.write(f'Selected clients: {c_ids}' + '\n')
+        logger_file.write(f'Selected clients: {c_ids}' + '\n')
 
         ##### Simulate servers model training on selected clients' data #####
         sys_metrics = server.train_model(num_epochs=args.E, batch_size=args.batch_size,
                                          minibatch=args.minibatch)
 
-        ##### Update server model (FedAvg) #####
+        ##### Update server model #####
         print("--- Updating central model ---")
         server.update_model()
 
         ##### Test model #####
-        if (i + 1) % eval_every == 0 or (i + 1) == num_rounds or (i+1) > num_rounds - 100:  # eval every round in last 100 rounds
+        # eveluation is performed every <eval_every> round and every round in the last 100
+        if (i + 1) % eval_every == 0 or (i + 1) == num_rounds or (i+1) > num_rounds - 100:
             _, test_metrics = print_stats(i + 1, server, train_clients, train_client_num_samples, test_clients, test_client_num_samples,
-                                                args, fp)
+                                                args, logger_file)
             if (i+1) > num_rounds - 100:
                 last_accuracies.append(test_metrics[0])
                 for k in avg_model:
@@ -191,11 +189,12 @@ def main():
         compute_and_log_eigs(args, server.client_model, eigs_file)
 
     # Save results
-    fp.close()
+    logger_file.close()
     results_file.close()
     eigs_file.close()
 
     if args.plots:
+        # generate accuracy and loss plots for the run
         trends_df = pd.read_csv(os.path.join(".", "results", f"{current_time}", f"trends.csv"))
         trends_df.plot(x="round", y="accuracy", color="tab:blue", title="Accuracy trend")
         plt.xlabel("Round")

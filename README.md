@@ -19,7 +19,7 @@ This work introduces **FedGloSS** (**Fed**erated **Glo**bal **S**erver-side **S*
 GIFs comparing FedGloSS's loss landscape (net) against those of two well-known methods (solid), FedAVG on the left and FedSAM on the right. ResNet18 trained on CIFAR10 ($\alpha = 0.05$).
 
 ## Algorithm
-**FedGloSS** proposes to apply SAM on the server side, while promoting consistency between local and global models by applying Alternating Direction Method of Multipliers (ADMM). Here, is the Algorithm that sumarizes the FedGloSS showing an example with both SAM and SGD (achievable by setting $\rho_l = 0$) on the client.
+**FedGloSS** proposes to apply SAM on the server side, while promoting consistency between local and global models by applying Alternating Direction Method of Multipliers (ADMM). The following algorithm summarizes FedGloSS, distinguishing between the use of SAM and SGD (achievable by setting $\rho_l = 0$) on the client side.
 
 <p align="center">
   <img src="algorithm.png" alt="Algorithm summarizing FedGloSS", width="830px">
@@ -50,7 +50,7 @@ The provided datasets are CIFAR10 and CIFAR100. Both datasets are split equally 
 - CIFAR10: $\alpha \in \{0, 0.05, 1, 5, 10, 100\}$
 - CIFAR100: $\alpha \in \{0, 0.5, 1000\}$
 
-To add a new dataset, place the raw data in `/data/{dataset_name}/raw/`. Client-specific training splits should correspond to a Dirichlet concentration parameter and be stored in `/data/{dataset_name}/train/` using the naming convention: `federated_train_alpha_{alpha_value}.json`. The test split should be placed in `/data/{dataset_name}/test/test.json`. Please add the dataset name to the list `DATASETS` in `/models/utils/args.py`. Ensure `{dataset_name}` matches the `--dataset` parameter when running an experiment.
+To add a new dataset, place the raw data in `/data/{dataset_name}/raw/`. Client-specific training splits should correspond to a Dirichlet concentration parameter and be stored in `/data/{dataset_name}/train/` using the naming convention: `federated_train_alpha_{alpha_value}.json`. The test split should be placed in `/data/{dataset_name}/test/test.json`. Please add the dataset name to the list `DATASETS` in `/codebase/utils/args.py`. Ensure `{dataset_name}` matches the `--dataset` parameter when running an experiment.
 
 ### Models
 The provided model is a CNN inspired by the LeNet-5 architecture. It consists of:
@@ -59,12 +59,12 @@ The provided model is a CNN inspired by the LeNet-5 architecture. It consists of
 - Two fully connected layers with 384 and 192 units.
 - A final output layer adjusted to the dataset's number of classes.
 
-The implementation is available in `/models/{dataset}/cnn.py`.
+The implementation is available in `/codebase/{dataset}/cnn.py`.
 
-To add a new model, place its implementation in `/models/{dataset_name}/{model_name}.py`. Ensure `{model_name}` matches the `--model` parameter when running an experiment.
+To add a new model, place its implementation in `/codebase/{dataset_name}/{model_name}.py`. Ensure `{model_name}` matches the `--model` parameter when running an experiment.
 
 ### CLI args
-The table below reports the arguments that can be used to run experiments with this repository. New args can be added to `/models/utils/args.py`.
+The table below reports the arguments that can be used to run experiments with this repository. New args can be added to `/codebase/utils/args.py`.
 
 | Argument Name        | Description                                                            | Default Value |
 |----------------------|------------------------------------------------------------------------|:-------------:|
@@ -132,5 +132,5 @@ python main.py --dataset cifar100 --dir-alpha 0 --where-loading init --model cnn
 ## Acknowledgements
 This repository builds upon the following projects:  
 - [`debcaldarola/fedsam`](https://github.com/debcaldarola/fedsam/tree/master) – the foundation for the main codebase.  
-- [`noahgolmant/pytorch-hessian-eigenthings`](https://github.com/noahgolmant/pytorch-hessian-eigenthings) – used as a reference for the spectral analysis implementation in `/models/eigenthings/`.  
+- [`noahgolmant/pytorch-hessian-eigenthings`](https://github.com/noahgolmant/pytorch-hessian-eigenthings) – used as a reference for the spectral analysis implementation in `/codebase/eigenthings/`.  
 - [`tomgoldstein/loss-landscape`](https://github.com/tomgoldstein/loss-landscape) – the basis for the landscape visualization code.

@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-mkdir ../models/results
-
 echo "Downloading CIFAR10..."
 cd ./cifar10/preprocessing
 wget https://www.cs.toronto.edu/~kriz/cifar-10-python.tar.gz
