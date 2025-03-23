@@ -3,7 +3,7 @@
 This repository contains the official implementation of
 > Caldarola, D., Cagnasso, P., Caputo, B., & Ciccone, M.
 > _"Beyond Local Sharpness: Communication-Efficient Global Sharpness-aware Minimization for Federated Learning"_,
-> IEEE/CVF 2025.
+> In IEEE/CVF Conference on Computer Vision and Pattern Recognition, 2025.
 
 [ [ArXiv](https://arxiv.org/abs/2412.03752) ] [ [Bibtex](#bibtex-citation) ]
 
@@ -99,7 +99,7 @@ The table below reports the arguments that can be used to run experiments with t
 ### Results
 The execution generates the following output files:
 - `{--dir arg value}/results/[YYYY][mm][dd]_[HH]:[MM]:[SS]/params.text`: Summary of the parameters used for the run.
-- `{--dir arg value}/results/[YYYY][mm][dd]_[HH]:[MM]:[SS]/trends.csv`: Results in terms of accuracy, global model norm, and pseudo-gradient norm.
+- `{--dir arg value}/results/[YYYY][mm][dd]_[HH]:[MM]:[SS]/trends.csv`: Results in terms of test accuracy, test loss, global model norm, and pseudo-gradient norm.
 - `{--dir arg value}/results/[YYYY][mm][dd]_[HH]:[MM]:[SS]/eigs.txt`: First five eigenvalues and the ratio between the first and fifth eigenvalue.
 - `{--dir arg value}/results/[YYYY][mm][dd]_[HH]:[MM]:[SS]/logs.txt`: A file that reports all the lines printed on the terminal during the training.
 - `{--dir arg value}/results/[YYYY][mm][dd]_[HH]:[MM]:[SS]/accuracy.pdf`: A PDF representing the accuracy trend during the experiment.
@@ -124,7 +124,8 @@ python main.py --dataset cifar100 --dir-alpha 0 --where-loading init --model cnn
 @inproceedings{caldarola2025beyond,
   title={Beyond Local Sharpness: Communication-Efficient Global Sharpness-aware Minimization for Federated Learning},
   author={Caldarola, Debora and Cagnasso, Pietro and Caputo, Barbara and Ciccone, Marco},
-  booktitle={Compuer Vision and Pattern Recognition}
+  booktitle={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition},
+  year={2025}
 }
 ```
 
