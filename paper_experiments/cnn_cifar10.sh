@@ -1,6 +1,6 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
-pushd ../codebase
+cd ../codebase || echo "Failed to change directory to ../codebase"
 
 # cifar10 alpha=0
 python main.py --dataset cifar10 --dir-alpha 0 --where-loading init --model cnn -T 10000 --eval-every 100 --C-t 5 --algorithm fedgloss --server-opt sgd --server-lr 1 --server-momentum 0 --batch-size 64 -E 1 --lr 0.01 --weight-decay 0.0004 --momentum 0 --device cuda:0 --rho-l 0.15 --eta 0 --beta 10 --rho 0.15 --T-s 2000 --plots --seed 0
