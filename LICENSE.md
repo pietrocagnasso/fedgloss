@@ -1,6 +1,6 @@
 BSD 2-Clause License
 
-Copyright (c) 2018, TalwalkarLab
+Copyright (c) 2025, VANDAL
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
