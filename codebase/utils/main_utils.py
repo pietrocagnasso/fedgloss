@@ -15,7 +15,7 @@ def create_paths(args, current_time, alpha=None, resume=False):
     if not os.path.exists(res_path):
         os.makedirs(res_path)
 
-    ckpt_path = os.path.join(args.dir, "results", f"{current_time}", 'checkpoints')
+    ckpt_path = os.path.join(args.dir, "results", f"{model}_{dataset}_{alpha}_{current_time}", 'checkpoints')
     if not os.path.exists(ckpt_path):
         os.makedirs(ckpt_path)
 

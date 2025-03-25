@@ -31,8 +31,8 @@ GIFs comparing FedGloSS's loss landscape (net) against those of two well-known m
 #### Environment
 Set up the environment and install the required dependencies:
 ```bash
-python -m venv ../fgvenv
-source ../fgvenv/bin/activate
+python -m venv ./fgvenv
+source ./fgvenv/bin/activate
 pip install -r requirements.txt -f https://download.pytorch.org/whl/torch_stable.html
 ```
 
@@ -107,7 +107,7 @@ The execution generates the following output files:
 - `{--dir}/results/{--model}_{--dataset}_alpha={--dir-alpha}_[YYYY][mm][dd]T[HH]:[MM]:[SS]/checkpoints/`: Contains some checkpoints saved during training.
 
 ### Examples
-Below are examples of how to run the paper's experiments.
+Below are examples of the paper's experiments that you can run from within the `/codebase` directory.
 
 #### CIFAR10
 ```bash
@@ -120,7 +120,7 @@ python main.py --dataset cifar100 --dir-alpha 0 --where-loading init --model cnn
 ```
 
 ### Paper Experiments
-In the `/paper_experiments` directory, you will find scripts to run all the CNN experiments from the paper. Be sure to activate the appropriate Python environment before executing any of these scripts.
+In the `/paper_experiments` directory, you can find scripts to run all the CNN experiments from the paper. Be sure to activate the appropriate Python environment before executing any of these scripts.
 
 ## Bibtex citation
 ```text
