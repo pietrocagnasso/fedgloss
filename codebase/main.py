@@ -47,7 +47,7 @@ def main():
 
     alpha = args.dir_alpha
     if alpha is not None:
-        alpha = 'alpha_{:.2f}'.format(alpha)
+        alpha = 'alpha={:.2f}'.format(alpha)
         print("Alpha:", alpha)
 
     # Setup GPU
@@ -119,7 +119,7 @@ def main():
     print('--- Random Initialization ---')
 
     start_time = datetime.now()
-    current_time = start_time.strftime("%Y%m%d_%H:%M:%S")
+    current_time = start_time.strftime("%Y%m%dT%H:%M:%S")
 
     ckpt_path, res_path, ckpt_name, results_file, eigs_file, logger_file = create_paths(args, current_time, alpha=alpha)
     ckpt_name = current_time + '.ckpt'

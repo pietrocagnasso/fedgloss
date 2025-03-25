@@ -1,7 +1,7 @@
 # Beyond Local Sharpness: Communication-Efficient Global Sharpness-aware Minimization for Federated Learning
 
 This repository contains the official implementation of
-> Caldarola, D., Cagnasso, P., Caputo, B., & Ciccone, M.
+> [Caldarola, D.](https://scholar.google.com/citations?user=rX-VwlcAAAAJ), Cagnasso, P., [Caputo, B.](https://scholar.google.com/citations?user=mHbdIAwAAAAJ), & [Ciccone, M.](https://scholar.google.com/citations?user=hOQjblcAAAAJ)
 > _"Beyond Local Sharpness: Communication-Efficient Global Sharpness-aware Minimization for Federated Learning"._
 > In Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition, 2025.
 
@@ -11,9 +11,9 @@ This repository contains the official implementation of
 Federated learning (FL) enables collaborative model training with privacy preservation. Data heterogeneity across edge devices (clients) can cause models to converge to sharp minima, negatively impacting generalization and robustness. Recent approaches use client-side sharpness-aware minimization (SAM) to encourage flatter minima, but the discrepancy between local and global loss landscapes often undermines their effectiveness, as optimizing for local sharpness does not ensure global flatness.  
 This work introduces **FedGloSS** (**Fed**erated **Glo**bal **S**erver-side **S**harpness), a novel FL approach that prioritizes the optimization of global sharpness on the server, using SAM. To reduce communication overhead, FedGloSS cleverly approximates sharpness using the previous global gradient, eliminating the need for additional client communication. Our extensive evaluations demonstrate that FedGloSS consistently reaches flatter minima and better performance compared to state-of-the-art FL methods across various federated vision benchmarks.
 
-<p align="center">
-  <img src="fedgloss-vs-fedavg.gif" alt="GIF showing the comparison between FedGloSS and FedAVG" width="410" height="300px">
-  <img src="fedgloss-vs-fedsam.gif" alt="GIF showing the comparison between FedGloSS and FedSAM" width="410" height="300px">
+<p align="center" width="100%">
+  <img src="fedgloss-vs-fedavg.gif" alt="GIF showing the comparison between FedGloSS and FedAVG" width="49%">
+  <img src="fedgloss-vs-fedsam.gif" alt="GIF showing the comparison between FedGloSS and FedSAM" width="49%">
 </p>
 
 GIFs comparing FedGloSS's loss landscape (net) against those of two well-known methods (solid), FedAVG on the left and FedSAM on the right. ResNet18 trained on CIFAR10 ($\alpha = 0.05$).
@@ -98,13 +98,13 @@ The table below reports the arguments that can be used to run experiments with t
 
 ### Results
 The execution generates the following output files:
-- `{--dir arg value}/results/[YYYY][mm][dd]_[HH]:[MM]:[SS]/params.text`: Summary of the parameters used for the run.
-- `{--dir arg value}/results/[YYYY][mm][dd]_[HH]:[MM]:[SS]/trends.csv`: Results in terms of test accuracy, test loss, global model norm, and pseudo-gradient norm.
-- `{--dir arg value}/results/[YYYY][mm][dd]_[HH]:[MM]:[SS]/eigs.txt`: First five eigenvalues and the ratio between the first and fifth eigenvalue.
-- `{--dir arg value}/results/[YYYY][mm][dd]_[HH]:[MM]:[SS]/logs.txt`: A file that reports all the lines printed on the terminal during the training.
-- `{--dir arg value}/results/[YYYY][mm][dd]_[HH]:[MM]:[SS]/accuracy.pdf`: A PDF representing the accuracy trend during the experiment.
-- `{--dir arg value}/results/[YYYY][mm][dd]_[HH]:[MM]:[SS]/loss.pdf`: A PDF representing the loss trend during the experiment.
-- `{--dir arg value}/[YYYY][mm][dd]_[HH]:[MM]:[SS]/checkpoints/`: Contains some checkpoints saved during training.
+- `{--dir}/results/{--model}_{--dataset}_alpha={--dir-alpha}_[YYYY][mm][dd]T[HH]:[MM]:[SS]/params.text`: Summary of the parameters used for the run.
+- `{--dir}/results/{--model}_{--dataset}_alpha={--dir-alpha}_[YYYY][mm][dd]T[HH]:[MM]:[SS]/trends.csv`: Results in terms of test accuracy, test loss, global model norm, and pseudo-gradient norm.
+- `{--dir}/results/{--model}_{--dataset}_alpha={--dir-alpha}_[YYYY][mm][dd]T[HH]:[MM]:[SS]/eigs.txt`: First five eigenvalues and the ratio between the first and fifth eigenvalue.
+- `{--dir}/results/{--model}_{--dataset}_alpha={--dir-alpha}_[YYYY][mm][dd]T[HH]:[MM]:[SS]/logs.txt`: A file that reports all the lines printed on the terminal during the training.
+- `{--dir}/results/{--model}_{--dataset}_alpha={--dir-alpha}_[YYYY][mm][dd]T[HH]:[MM]:[SS]/accuracy.pdf`: A PDF representing the accuracy trend during the experiment.
+- `{--dir}/results/{--model}_{--dataset}_alpha={--dir-alpha}_[YYYY][mm][dd]T[HH]:[MM]:[SS]/loss.pdf`: A PDF representing the loss trend during the experiment.
+- `{--dir}/results/{--model}_{--dataset}_alpha={--dir-alpha}_[YYYY][mm][dd]T[HH]:[MM]:[SS]/checkpoints/`: Contains some checkpoints saved during training.
 
 ### Examples
 Below are examples of how to run the paper's experiments.
@@ -118,6 +118,9 @@ python main.py --dataset cifar10 --dir-alpha 0 --where-loading init --model cnn 
 ```bash
 python main.py --dataset cifar100 --dir-alpha 0 --where-loading init --model cnn -T 20000 --eval-every 100 --C-t 5 --algorithm fedgloss --seed 0 --server-opt sgd --server-lr 1 --server-momentum 0 --batch-size 64 -E 1 --lr 0.01 --weight-decay 0.0004 --momentum 0 --device cuda:0 --rho-l 0.2 --eta 0 --beta 100 --rho 0.01 --T-s 15000 --plots
 ```
+
+### Paper Experiments
+In the `/paper_experiments` directory, you will find scripts to run all the CNN experiments from the paper. Be sure to activate the appropriate Python environment before executing any of these scripts.
 
 ## Bibtex citation
 ```text

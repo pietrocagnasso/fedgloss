@@ -7,8 +7,11 @@ from utils.args import SA_MINIMIZERS
 
 def create_paths(args, current_time, alpha=None, resume=False):
     """ Create paths for checkpoints, plots, analysis results and experiment results. """
+    model = args.model
+    dataset = args.dataset
+
     # Create file for storing results
-    res_path = os.path.join(args.dir, "results", f"{current_time}")
+    res_path = os.path.join(args.dir, "results", f"{model}_{dataset}_{alpha}_{current_time}")
     if not os.path.exists(res_path):
         os.makedirs(res_path)
 
